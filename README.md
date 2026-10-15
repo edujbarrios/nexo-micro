@@ -125,6 +125,8 @@ python -m build
 python -m twine check dist/*
 ```
 
+**Verified synthetic tokenizer result:** in [CI run 38784155519](https://github.com/edujbarrios/nexo-micro/actions/runs/38784155519), 400 messages used **4,400 tokens** as compact JSON, **3,200** as stateful minimal-schema JSON, and **1,031** as Micro/1 including one 55-token grammar primer (`o200k_base`; identical counts on this corpus for `cl100k_base`). That is 76.57% fewer tokens than the full JSON baseline **for this corpus only**. See [full method](docs/BENCHMARKS.md).
+
 Benchmarks compare conventional JSON, short-key JSON, stateful JSON, Micro, Micro plus a one-time grammar primer, and per-message adaptive selection. CI publishes a JSON artifact of tokenizer results. **Do not extrapolate this synthetic corpus to real chat or total API billing** without a held-out workload and verified model outputs. See [benchmark methodology](docs/BENCHMARKS.md).
 
 ## Scope and open-source status

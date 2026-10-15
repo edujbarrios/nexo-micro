@@ -2,6 +2,20 @@
 
 Use **specific model/tokenizer**, dataset, language, grammar primer and a well-specified baseline. Bytes saved are *not* model tokens saved. Tokenizer efficiency is *not* semantic correctness or model billing.
 
+## Verified synthetic tokenizer results (2026-10-15)
+
+[GitHub Actions run 38784155519](https://github.com/edujbarrios/nexo-micro/actions/runs/38784155519) **completed successfully** on Python 3.10, 3.11, 3.12, 3.13. It generated the `synthetic-tokenizer-benchmarks` artifact containing the tokenizer counts below. All values are **tokens for 400 messages (100 four-message tasks)**, not network bytes or billable API usage.
+
+| Baseline / format | `o200k_base` | `cl100k_base` |
+| --- | ---: | ---: |
+| Compact full-schema JSON | 4,400 | 4,400 |
+| Minimal-schema JSON | 4,400 | 4,400 |
+| Stateful minimal-schema JSON | 3,200 | 3,200 |
+| Micro/1 payload only | **976** | **976** |
+| Micro/1 + one 55-token grammar primer | **1,031** | **1,031** |
+
+On this **specific synthetic fixture**, Micro/1 + primer required **76.57% fewer tokens** than compact full-schema JSON and **67.78% fewer** than stateful minimal-schema JSON. Micro payloads alone required 77.82% fewer than full JSON. These are measured token counts, **not proof of LLM ability to use the grammar, general message compression, or end-to-end costs**. Reproduce with `nexo-micro bench --encoding o200k_base --repeats 100` after installing `.[bench]`.
+
 ## Local synthetic corpus
 
 `python -m nexo_micro bench --bytes-only --repeats 10` counts UTF-8 bytes of 40 event messages (4 messages per task, 10 tasks). It reports `json_compact`, `json_min_schema`, `json_stateful`, `micro`, `micro_with_primer` and `adapted`. Only `micro_with_primer` charges the sample grammar primer once; in a real application this may be provided to multiple model instances or repeated requests. Use `--encoding o200k_base` / `cl100k_base` after installing `tiktoken` to obtain actual tokenizer counts.
