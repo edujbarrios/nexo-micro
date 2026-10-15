@@ -204,6 +204,6 @@ class MicroSession:
                 if len(parts_) != len(macro.parameters):
                     raise ProtocolError("incorrect macro arity")
                 message.update(intent="macro", name=macro.name,
-                               args={key: from_b36(value) for key, value in zip(macro.parameters, parts_)})
+                               args={key: from_b36(value) for key, value in zip(macro.parameters, parts_, strict=True)})
         self.active_task = task
         return message

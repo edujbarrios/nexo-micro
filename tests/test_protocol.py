@@ -13,7 +13,7 @@ def test_roundtrip():
         {"intent": "complete", "task": 999, "critical": 0},
     ]
     expected_wire = ["@16|?", "~28", "!3", "x4", ">", "@RR|!0"]
-    for message, wire in zip(messages, expected_wire):
+    for message, wire in zip(messages, expected_wire, strict=True):
         assert a.encode(message) == wire
         assert b.decode(wire) == message
 
