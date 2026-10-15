@@ -1,0 +1,54 @@
+[build-system]
+requires = ["setuptools>=77", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "nexo-micro"
+version = "0.1.0"
+description = "Context-bound semantic micro-language for token-aware AI agent messages"
+readme = {file = "README.md", content-type = "text/markdown"}
+requires-python = ">=3.10"
+authors = [{name = "edujbarrios and NEXO Micro contributors"}]
+license = "MIT"
+keywords = ["ai-agents", "token-efficiency", "multi-agent", "semantic-protocol", "micro-language"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Developers",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Topic :: Software Development :: Libraries :: Python Modules",
+  "Topic :: Communications",
+]
+dependencies = []
+
+[project.optional-dependencies]
+bench = ["tiktoken>=0.8,<1"]
+dev = ["pytest>=8,<10", "build>=1.2,<3", "twine>=6,<7", "ruff>=0.9,<1", "tiktoken>=0.8,<1"]
+
+[project.scripts]
+nexo-micro = "nexo_micro.__main__:main"
+
+[project.urls]
+Homepage = "https://github.com/edujbarrios/nexo-micro"
+Repository = "https://github.com/edujbarrios/nexo-micro"
+Issues = "https://github.com/edujbarrios/nexo-micro/issues"
+Changelog = "https://github.com/edujbarrios/nexo-micro/blob/main/CHANGELOG.md"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["nexo_micro*"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
+addopts = "-ra"
+
+[tool.ruff]
+target-version = "py310"
+line-length = 110
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "B"]
